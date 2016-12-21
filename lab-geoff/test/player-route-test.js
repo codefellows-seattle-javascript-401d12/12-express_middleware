@@ -33,11 +33,13 @@ describe('Player Routes', function() {
     });
 
     after( done => {
-      if(this.tempPlayer) {
-        Player.delete(this.tempPlayer.id)
-        .then( () => done())
-        .catch(done);
-      }
+      if(!this.tempPlayer) return done();
+      Player.delete(this.tempPlayer.id)
+      .then( () => {
+        delete this.tempPlayer;
+        done();
+      })
+      .catch(done);
     });
 
     it('should return a player with a valid id', done => {
@@ -86,7 +88,18 @@ describe('Player Routes', function() {
       .catch(done);
     });
 
-    it('should delete an item', done => {
+    //If the test fails, we may still want to clean up.
+    after( done => {
+      if(!this.tempPlayer) return done();
+      Player.delete(this.tempPlayer.id)
+      .then( () => {
+        delete this.tempPlayer;
+        done();
+      })
+      .catch(done);
+    });
+
+    it('should delete an item with valid id', done => {
       request.delete(`${url}/${this.tempPlayer.id}`)
       .end( (err, res) => {
         expect(err).to.not.be.an('error');
@@ -94,8 +107,98 @@ describe('Player Routes', function() {
         //TODO: Do we need to check the item that is returned against the example?
         Player.fetch(this.tempPlayer.id)
         .catch( () => {
+          delete this.tempPlayer;
           done();
         });
+      });
+    });
+
+    it('should 404 on an unknown player', done => {
+      request.delete(`${url}/bogus12345`)
+      .end( (err, res) => {
+        expect(res.status).to.equal(404);
+        done();
+      });
+    });
+
+    // it('should 400 with no id', done => {
+    //   request.delete(`${url}`)
+    //   .end( (err, res) => {
+    //     expect(res.status).to.equal(400);
+    //     done();
+    //   });
+    // });
+  });
+
+  describe('POST /api/player', function() {
+    after( done => {
+      if(!this.tempPlayer) return done();
+      Player.delete(this.tempPlayer.id)
+      .then( () => {
+        delete this.tempPlayer;
+        done();
+      })
+      .catch(done);
+    });
+
+
+    it('should create a player with valid body', done => {
+      request.post(`${url}`)
+      .send(examplePlayer)
+      .end( (err, res) => {
+        expect(res.status).to.equal(200); //TODO: Change to 201
+        expect(res.body.name).to.equal(examplePlayer.name);
+        expect(res.body.email).to.equal(examplePlayer.email);
+        expect(res.body.id).to.be.ok;
+        this.tempPlayer = res.body;
+        done();
+      });
+    });
+  });
+
+  describe('PUT /api/player', function() {
+    //TODO: Should we move the before call up to a higher describe()?
+    //      Would `this` have the right context across tests?
+    before( done => {
+      Player.create(examplePlayer)
+      .then( player => {
+        this.tempPlayer = player;
+        done();
+      })
+      .catch(done);
+    });
+
+    after( done => {
+      if(!this.tempPlayer) return done();
+      Player.delete(this.tempPlayer.id)
+      .then( () => {
+        delete this.tempPlayer;
+        done();
+      })
+      .catch(done);
+    });
+
+    it('should modify a player with valid body and id', done => {
+      let update = { name: 'Some other guy'};
+      request.put(`${url}/${this.tempPlayer.id}`)
+      .send(update)
+      .end( (err, res) => {
+        expect(err).to.not.be.an('error');
+        expect(res.status).to.equal(200); //TODO: Change to 202
+        expect(res.body.name).to.equal(update.name);
+        expect(res.body.email).to.equal(examplePlayer.email); //Not modified
+        expect(res.body.id).to.equal(this.tempPlayer.id);
+        done();
+      });
+    });
+
+    it('should 404 on an unknown player', done => {
+      let update = { name: 'Some other guy'};
+      request.put(`${url}/not-a-real-id`)
+      .send(update)
+      .end( (err, res) => {
+        expect(res.status).to.equal(404);
+        done();
       });
     });
   });
