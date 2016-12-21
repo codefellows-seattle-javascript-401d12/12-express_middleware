@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/maschigokae/12-express_middleware/issues"
   },
-  "homepage": "https://github.com/maschigokae/12-express_middleware#readme"
+  "homepage": "https://github.com/maschigokae/12-express_middleware#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
 }
