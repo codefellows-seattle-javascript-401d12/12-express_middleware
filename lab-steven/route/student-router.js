@@ -44,3 +44,5 @@ studentRouter.delete('/api/student/:id', (request, response, next) => {
   Student.deleteStudent(request.params.id)
   .catch(next);
 });
+
+module.exports = studentRouter;
