@@ -65,10 +65,7 @@ exports.listItems = function(collection) {
   debug('listItems()');
   return fs.readdirProm(`./data/${collection}`)
   .then( files => files
-  .filter( name => {
-    debug('filter:',name);
-    return name !== '.keep';
-  })
+  .filter( name => name !== '.keep')
   .map(name => name.split('.json')[0]))
   .catch( err => Promise.reject(createError(404, err.message)));
 };
