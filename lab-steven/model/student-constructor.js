@@ -21,3 +21,13 @@ Student.createStudent = function(student) {
   debug('Student constructor: createStudent method.');
   return storage.createItem('student', new Student(student));
 };
+
+Student.readStudent = function(id) {
+  debug('Student constructor: readStudent method.');
+  return storage.readItem('student', id);
+};
+
+Student.updateStudent = function(id, content) {
+  debug('Student constructor: updateStudent method.');
+  return storage.updateItem('student', id, content);
+};
