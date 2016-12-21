@@ -98,13 +98,30 @@ describe('Student Router.', () => {
     });
 
     describe('With no ID passed in.', () => {
+      before(done => {
+        Student.createStudent(sampleStudent)
+        .then(student => {
+          this.tempStudent = student;
+          done();
+        })
+        .catch(done);
+      });
+
+      after(done => {
+        if (this.tempStudent) {
+          Student.deleteStudent(this.tempStudent.id)
+          .then(() => done())
+          .catch(done);
+        }
+      });
+
       it('Should respond with an array of all IDs.', done => {
         request
         .get(`${url}/api/student`)
         .end((err, response) => {
           expect(response.status).to.equal(200);
-          expect(response.body).to.be.an('object');
-          expect(response.body).to.be.at.least(1);
+          expect(response.body).to.be.an('array');
+          expect(response.body.length).to.be.at.least(1);
           done();
         });
       });
