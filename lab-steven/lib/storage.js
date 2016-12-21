@@ -55,7 +55,7 @@ exports.deleteItem = function(schemaName, id) {
   if (!id) throw createError(400, 'Expected an ID.');
 
   return fs.unlinkProm(`${__dirname}/../data/${schemaName}/${id}.json`)
-  .catch(err => Promise.reject(createError(500, err.message)));
+  .catch(err => Promise.reject(createError(404, err.message)));
 };
 
 exports.readAllItems = function(schemaName) {

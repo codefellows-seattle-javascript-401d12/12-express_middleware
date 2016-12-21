@@ -236,6 +236,7 @@ describe('Student Router.', () => {
           if (err) return done(err);
           expect(response.status).to.equal(204);
           expect(response.body.name).to.equal(undefined);
+          done();
         });
       });
     });
