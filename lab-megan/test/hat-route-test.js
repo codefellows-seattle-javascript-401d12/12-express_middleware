@@ -14,6 +14,10 @@ const exampleHat = {
 
 describe('Hat Routes', function() {
 
+// ---------
+// GET tests
+// ---------
+
   describe('GET: /api/hat', function() {
     describe('with a valid id', function() {
       before( done => {
@@ -52,8 +56,23 @@ describe('Hat Routes', function() {
           });
         });
       });
+
+      describe('with an invalid path', function() {
+        it('should respond with a 404 status code', done => {
+          request.get(`${url}/api/boots/123456789`)
+          .end((err, res) => {
+            expect(res.status).to.equal(404);
+            done();
+          });
+        });
+      });
+
     });
   });
+
+// ----------
+// POST tests
+// ----------
 
   describe('POST: /api/hat', function() {
     describe('with a valid body', function() {
@@ -77,8 +96,35 @@ describe('Hat Routes', function() {
           done();
         });
       });
+
+      describe('with no content', function() {
+        it('should respond with a 400 status code', done => {
+          request.post(`${url}/api/hat`)
+          .end((err, res) => {
+            expect(res.status).to.equal(400);
+            expect(res.text).to.include('BadRequestError');
+            done();
+          });
+        });
+      });
+
+      describe('with an invalid path', function() {
+        it('should respond with 404 error code', done => {
+          request.post(`${url}/api/boots`)
+          .send(exampleHat)
+          .end((err, res) => {
+            expect(res.status).to.equal(404);
+            done();
+          });
+        });
+      });
+
     });
   });
+
+// ---------
+// PUT tests
+// ---------
 
   describe('PUT: /api/hat', function() {
     describe('with a valid id and body', function() {
@@ -113,6 +159,31 @@ describe('Hat Routes', function() {
           done();
         });
       });
+
+      describe('with an invalid id', function() {
+        it('should respond with a 404 status code', done => {
+          let updateHat = { color: 'new color', style: 'new style' };
+          request.put(`${url}/api/hat?id=123456789`)
+          .send(updateHat)
+          .end((err, res) => {
+            expect(res.status).to.equal(404);
+            done();
+          });
+        });
+      });
+
+      describe('with an invalid path', function() {
+        it('should respond with 404 error code', done => {
+          let updateHat = { color: 'new color', style: 'new style' };
+          request.put(`${url}/api/boots`)
+          .send(updateHat)
+          .end((err, res) => {
+            expect(res.status).to.equal(404);
+            done();
+          });
+        });
+      });
+
     });
   });
 });
