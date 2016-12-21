@@ -2,7 +2,7 @@
 
 const morgan = require('morgan');
 const express = require('express');
-const createErrors = require('http-errors');
+const createError = require('http-errors');
 const debug = require('debug')('dogs:server');
 const dogRouter = require('./route/dog-router.js');
 const cors = require('./lib/cors-middleware.js');
