@@ -20,7 +20,7 @@ Hat.createHat = function(_hat) {
   debug('createHat');
 
   try {
-    let hat = new Hat(_hat.name, _hat.style);
+    let hat = new Hat(_hat.color, _hat.style);
     return storage.createItem('hat', hat);
   } catch (err) {
     return Promise.reject(createError(400, 'err.message'));
@@ -35,7 +35,7 @@ Hat.fetchHat = function(id) {
 Hat.updateHat = function(id, _hat) {
   debug('updateHat');
 
-  return storage.fetchItm('hat', id)
+  return storage.fetchItem('hat', id)
   .catch( err => Promise.reject(createError(404, err.message)))
   .then( hat => {
     for (var prop in hat) {

@@ -3,13 +3,13 @@
 const expect = require('chai').expect;
 const request = require('superagent');
 const Hat = require('../model/hat.js');
-const url = 'http://localhost:8000';
+const url = 'http://localhost:3000';
 
 require('../server.js');
 
 const exampleHat = {
-  name: 'example name',
-  content: 'example content'
+  color: 'example color',
+  style: 'example style'
 };
 
 describe('Hat Routes', function() {
@@ -37,8 +37,8 @@ describe('Hat Routes', function() {
           if (err) return done(err);
           expect(res.status).to.equal(200);
           expect(res.body.id).to.equal(this.tempHat.id);
-          expect(res.body.name).to.equal(this.tempHat.name);
-          expect(res.body.content).to.equal(this.tempHat.content);
+          expect(res.body.color).to.equal(this.tempHat.color);
+          expect(res.body.style).to.equal(this.tempHat.style);
           done();
         });
       });
@@ -71,8 +71,8 @@ describe('Hat Routes', function() {
         .end((err, res) => {
           if (err) return done(err);
           expect(res.status).to.equal(200);
-          expect(res.body.name).to.equal(exampleHat.name);
-          expect(res.body.content).to.equal(exampleHat.content);
+          expect(res.body.color).to.equal(exampleHat.color);
+          expect(res.body.style).to.equal(exampleHat.style);
           this.tempHat = res.body;
           done();
         });
@@ -100,7 +100,7 @@ describe('Hat Routes', function() {
       });
 
       it('should return a hat', done => {
-        let updateHat = { name: 'new name', content: 'new content' };
+        let updateHat = { color: 'new color', style: 'new style' };
         request.put(`${url}/api/hat?id=${this.tempHat.id}`)
         .send(updateHat)
         .end((err, res) => {
