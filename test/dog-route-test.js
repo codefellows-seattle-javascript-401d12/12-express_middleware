@@ -1,9 +1,9 @@
 'use strict';
 
-const expect = require('chat').expect;
+const expect = require('chai').expect;
 const request = require('bluebird');
 const Dog = require('../model/dogs.js');
-const url = require('http://localhost:8000');
+const url = 'http://localhost:8000';
 
 require('../server.js');
 
