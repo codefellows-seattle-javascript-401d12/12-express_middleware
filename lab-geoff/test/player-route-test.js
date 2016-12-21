@@ -21,31 +21,6 @@ describe('Player Routes', function() {
     .catch(done);
   });
 
-  describe('DELETE /api/player', function() {
-    before( done => {
-      Player.create(examplePlayer)
-      .then( player => {
-        this.tempPlayer = player;
-        done();
-      })
-      .catch(done);
-    });
-
-    it('should delete an item', done => {
-      request.delete(`${url}/${this.tempPlayer.id}`)
-      .end( (err, res) => {
-        expect(err).to.not.be.an('error');
-        expect(res.status).to.equal(204);
-        //TODO: Do we need to check the item that is returned against the example?
-        Player.fetch(this.tempPlayer.id)
-        .catch( () => {
-          done();
-        });
-      });
-    });
-  });
-
-
   describe('GET /api/player', function() {
     before( done => {
       Player.create(examplePlayer)
@@ -96,6 +71,30 @@ describe('Player Routes', function() {
         done();
       });
     });
-
   });
+
+  describe('DELETE /api/player', function() {
+    before( done => {
+      Player.create(examplePlayer)
+      .then( player => {
+        this.tempPlayer = player;
+        done();
+      })
+      .catch(done);
+    });
+
+    it('should delete an item', done => {
+      request.delete(`${url}/${this.tempPlayer.id}`)
+      .end( (err, res) => {
+        expect(err).to.not.be.an('error');
+        expect(res.status).to.equal(204);
+        //TODO: Do we need to check the item that is returned against the example?
+        Player.fetch(this.tempPlayer.id)
+        .catch( () => {
+          done();
+        });
+      });
+    });
+  });
+  
 });

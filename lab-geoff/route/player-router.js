@@ -39,6 +39,8 @@ router.put('/api/player/:id', jsonParser, function(req, res, next) {
 router.delete('/api/player/:id', function(req, res, next) {
   debug('DELETE: /api/player/:id', req.params.id);
   Player.delete(req.params.id)
-  .then( player => res.json(player)) //TODO: Do we need to res.status(204)?
+  .then( player => {
+    res.status(204).json(player);
+  })
   .catch(next);
 });
