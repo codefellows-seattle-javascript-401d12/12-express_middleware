@@ -6,6 +6,8 @@ const Student = require('../model/student-constructor.js');
 const PORT = process.env.PORT || 8080;
 const url = `http://localhost:${PORT}`;
 
+require('../server.js');
+
 const sampleStudent = {
   name: 'Steven',
   age: '30',
@@ -33,8 +35,8 @@ describe('Student Router.', () => {
           expect(response.body.name).to.equal(sampleStudent.name);
           expect(response.body.age).to.equal(sampleStudent.age);
           this.tempStudent = response.body;
+          done();
         });
-        done();
       });
     });
 
