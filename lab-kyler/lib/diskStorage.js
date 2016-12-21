@@ -3,7 +3,7 @@
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'), {suffix: 'Prom'});
 const createError = require('http-errors');
-const debug = require('debug')('note:storage');
+const debug = require('debug')('joke:storage');
 
 module.exports = exports = {};
 
@@ -33,12 +33,11 @@ exports.fetchItem = (schema, id) => {
 };
 
 exports.enumerate = (schema) => {
+  debug('enumerate method');
   if (!schema) return Promise.reject(createError(400, 'expected schema'));
 
-  return fs.readdirProm(`${__dirname}/../data/${schema}/`)
-  .then( fileArray => {
-    return fileArray.forEach(fileArray.map(name => name.split('.json')[0]));
-  })
+  return fs.readdirProm(`${__dirname}/../data/${schema}`)
+  .then( fileArray => fileArray.map(fileName => fileName.split('.json')[0]))
   .catch( err => Promise.reject(createError(404, err.message)));
 };
 
