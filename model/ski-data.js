@@ -28,10 +28,34 @@ SkiData.createData = function(_skiArea) {
   }
 };
 
-//TODO: set up getData function
+SkiData.getData = function(_id) {
+  debug('getData');
 
-//TODO: set up updateData function
+  return setStorage.getDataFile('ski', _id);
+};
 
-//TODO: set up deleteData function
+SkiData.updateData = function(_id, _skiData) {
+  debug('updateData');
 
-//TODO: set up get all data function
+  return setStorage.getDataFile('ski', _id)
+    .then( skiData => {
+      for(var prop in skiData) {
+        if(prop === 'id') continue;
+        if(_skiData[prop]) skiData[prop] === _skiData[prop];
+      }
+      return setStorage.createDataFile('ski', skiData);
+    })
+    .catch( err => Promise.reject(createError(404, err.message)));
+};
+
+SkiData.deleteData = function(_id) {
+  debug('deleteData');
+
+  return setStorage.deleteDataFile('ski', _id);
+};
+
+SkiData.getAllData = function() {
+  debug('getAllData');
+
+  return setStorage.getAllDataFiles('ski');
+};
