@@ -217,4 +217,55 @@ describe('Student Router.', () => {
       });
     });
   });
+
+  describe('DELETE routes.', () => {
+    describe('With a valid ID.', () => {
+      before(done => {
+        Student.createStudent(sampleStudent)
+        .then(student => {
+          this.tempStudent = student;
+          done();
+        })
+        .catch(done);
+      });
+
+      it('Should return a 204 status.', done => {
+        request
+        .delete(`${url}/api/student/${this.tempStudent.id}`)
+        .end((err, response) => {
+          if (err) return done(err);
+          expect(response.status).to.equal(204);
+          expect(response.body.name).to.equal(undefined);
+        });
+      });
+    });
+
+    describe('With an invalid ID.', () => {
+      before(done => {
+        Student.createStudent(sampleStudent)
+        .then(student => {
+          this.tempStudent = student;
+          done();
+        })
+        .catch(done);
+      });
+
+      after(done => {
+        Student.deleteStudent(this.tempStudent.id)
+        .then(() => done())
+        .catch(done);
+      });
+
+      it('Should return a 404 error.', done => {
+        request
+        .delete(`${url}/api/student/69`)
+        .end((err, response) => {
+          expect(err).to.be.an('error');
+          expect(response.status).to.equal(404);
+          expect(response.body.name).to.equal(undefined);
+          done();
+        });
+      });
+    });
+  });
 });
