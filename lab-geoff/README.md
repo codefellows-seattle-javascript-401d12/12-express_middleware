@@ -15,7 +15,17 @@ Add a player to the system.
   email: 'someone@example.com'
 }
 ```
-Both `name` and `email` are required in the post body. API expects content type of application/json.
+Both `name` and `email` are required in the post body. API expects content type of application/json. Returns a 201 with the newly created player, or a 400 if name or email are missing or not valid.
+
+## PUT /api/player
+Update a player
+```js
+{
+  name: 'Updated Name',
+  email: 'updated@example.com'
+}
+```
+Update can include name and/or email. Only supplied values will be updated. Should return a 202 on success, and 404 if the player is not found.
 
 ## DELETE /api/player?id=player_id
-Removes a player from the system, if found.
+Removes a player from the system, if found. Returns status 204 on success.
