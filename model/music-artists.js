@@ -2,7 +2,7 @@
 
 const uuid = require('node-uuid');
 const createError = require('http-errors');
-const debug = require('debug')('artist:artist');
+const debug = require('debug')('music-artists:music-artists');
 const storage = require('../lib/storage.js');
 
 const Artist = module.exports = function(name, genre) {
@@ -11,7 +11,7 @@ const Artist = module.exports = function(name, genre) {
   if(!name) throw createError(400, 'expected name');
   if(!genre) throw createError(400, 'expected genre');
 
-  this.id = uuid.v2();
+  this.id = uuid.v1();
   this.name = name;
   this.genre = genre;
 

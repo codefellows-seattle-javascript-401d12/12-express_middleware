@@ -3,7 +3,7 @@
 const Router = require('express').Router;
 const jsonParser = require('body-parser').json();
 const debug = require('debug')('artist:artist-router.js');
-const Artist = require('../model/artist.js');
+const Artist = require('../model/music-artists.js');
 const artistRouter = new Router();
 
 artistRouter.post('/api/artist', jsonParser, function(req, res, next) {
