@@ -31,3 +31,13 @@ Student.updateStudent = function(id, content) {
   debug('Student constructor: updateStudent method.');
   return storage.updateItem('student', id, content);
 };
+
+Student.deleteStudent = function(id) {
+  debug('Student constructor: deleteStudent method.');
+  return storage.deleteItem(id);
+};
+
+Student.readAllStudents = function() {
+  debug('Student constructor: getAllStudents method.');
+  return storage.readAllItems('student');
+};
