@@ -33,7 +33,7 @@ studentRouter.get('/api/student', (request, response, next) => {
 studentRouter.put('/api/student/:id', parseJSON, (request, response, next) => {
   debug('Student router PUT: /api/student/:id');
 
-  Student.updateStudent(request.params.id)
+  Student.updateStudent(request.params.id, request.body)
   .then(student => response.json(student))
   .catch(next);
 });
@@ -42,6 +42,7 @@ studentRouter.delete('/api/student/:id', (request, response, next) => {
   debug('Student router DELETE: /api/student/:id');
 
   Student.deleteStudent(request.params.id)
+  .then(() => response.status(204).send())
   .catch(next);
 });
 

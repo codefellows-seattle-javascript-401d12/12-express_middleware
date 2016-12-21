@@ -37,13 +37,13 @@ exports.updateItem = function(schemaName, id, content) {
   if (!id) throw createError(400, 'Expected an ID.');
   if (!content) throw createError(400, 'Expected content to update with.');
 
-  exports.readItem(schemaName, id)
+  return exports.readItem(schemaName, id)
   .then(student => {
     for (var key in content) {
       if (key === 'id') continue;
       student[key] = content[key];
     }
-    exports.createItem(schemaName, student);
+    return exports.createItem(schemaName, student);
   })
   .catch(err => Promise.reject(createError(404, err.message)));
 };

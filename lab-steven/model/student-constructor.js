@@ -34,7 +34,7 @@ Student.updateStudent = function(id, content) {
 
 Student.deleteStudent = function(id) {
   debug('Student constructor: deleteStudent method.');
-  return storage.deleteItem(id);
+  return storage.deleteItem('student', id);
 };
 
 Student.readAllStudents = function() {
