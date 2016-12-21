@@ -18,6 +18,12 @@ const examplePlayer = {
 };
 
 describe('Player Routes', function() {
+  before( done => {
+    debug('setting up server...');
+    require('../server.js').start()
+    .then(done)
+    .catch(done);
+  });
   describe('GET /api/player', function() {
     before( done => {
       Player.create(examplePlayer)
