@@ -35,7 +35,7 @@ dogRouter.get('/api/dog', function(req, res, next) {
 
   Dog.fetchIDs()
   .then( ids => res.json(ids))
-  .catch( err => next(err));
+  .catch(next);
 });
 
 module.exports = dogRouter;
