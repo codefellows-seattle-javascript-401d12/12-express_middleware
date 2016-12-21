@@ -1,0 +1,38 @@
+{
+  "name": "12-express_middleware",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "DEBUG='note*' mocha",
+    "start": "DEBUG='note*' node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dbecker4130/12-express_middleware.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dbecker4130/12-express_middleware/issues"
+  },
+  "homepage": "https://github.com/dbecker4130/12-express_middleware#readme",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "body-parser": "^1.15.2",
+    "debug": "^2.4.5",
+    "express": "^4.14.0",
+    "http-errors": "^1.5.1",
+    "morgan": "^1.7.0",
+    "node-uuid": "^1.4.7"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "superagent": "^3.3.1"
+  }
+}
