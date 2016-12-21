@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "DEBUG='mnp*' mocha",
-    "start": "DEBUG='mnp*' node server.js"
+    "start": "DEBUG='mnp*' node start.js"
   },
   "keywords": [],
   "author": "",

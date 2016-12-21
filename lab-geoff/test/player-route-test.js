@@ -3,12 +3,10 @@
 const expect = require('chai').expect;
 const request = require('superagent');
 const Player = require('../model/player.js');
-const debug = require('debug')('mnp:player-route-test');
+// const debug = require('debug')('mnp:player-route-test');
 
-request('../server.js');
-
-//TODO: Perhaps PORT = require('../server.js').PORT; ?
-const PORT = process.env.PORT || 8000;
+const server = require('../server.js');
+const PORT = server.PORT;
 
 const url = `http://localhost:${PORT}/api/player`;
 
@@ -19,7 +17,6 @@ const examplePlayer = {
 
 describe('Player Routes', function() {
   before( done => {
-    debug('setting up server...');
     require('../server.js').start()
     .then(done)
     .catch(done);
@@ -43,12 +40,8 @@ describe('Player Routes', function() {
     });
 
     it('should return a player', done => {
-      let tempUrl = `${url}/${this.tempPlayer.id}`;
-      debug('tempUrl:',tempUrl);
-      request.get(tempUrl)
+      request.get(`${url}/${this.tempPlayer.id}`)
       .end( (err, res) => {
-        debug('err:',err);
-        debug('res:',res);
         if(err) return done(err);
         // expect(err).to.not.be.an('error');
         expect(res.status).to.equal(200);

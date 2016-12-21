@@ -27,4 +27,4 @@ module.exports.start = function() {
   });
 };
 
-// start().then(debug('Server up:', PORT));
+module.exports.PORT = PORT;
