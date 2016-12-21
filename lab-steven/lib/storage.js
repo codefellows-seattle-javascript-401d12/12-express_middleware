@@ -47,3 +47,21 @@ exports.updateItem = function(schemaName, id, content) {
   })
   .catch(err => Promise.reject(createError(404, err.message)));
 };
+
+exports.deleteItem = function(schemaName, id) {
+  debug('Storage.js: deleteItem method.');
+
+  if (!schemaName) throw createError(400, 'Expected a schema name.');
+  if (!id) throw createError(400, 'Expected an ID.');
+
+  return fs.unlinkProm(`${__dirname}/../data/${schemaName}/${id}.json`)
+  .catch(err => Promise.reject(createError(500, err.message)));
+};
+
+exports.readAllItems = function(schemaName) {
+  if (!schemaName) throw createError(400, 'Expected a schema name.');
+
+  return fs.readdirProm(`${__dirname}/../data/${schemaName}`)
+  .then(arrayOfFiles => Promise.resolve(arrayOfFiles.filter(element => element !== '.gitkeep').map(element => element.split('.json')[0])))
+  .catch(err => Promise.reject(createError(500, err.message)));
+};
