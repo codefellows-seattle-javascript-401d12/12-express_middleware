@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "DEBUG='student*' node server.js",
-    "test": "DEBUG='student*' mocha'"
+    "test": "DEBUG='student*' mocha"
   },
   "keywords": [],
   "author": "",
