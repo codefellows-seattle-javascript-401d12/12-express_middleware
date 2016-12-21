@@ -5,16 +5,15 @@ const debug = require('debug')('ski:server');
 const morgan = require('morgan');
 const app = express();
 const skiRouter = require('./route/ski-router.js');
-//TODO: require in cors middleware
-//TODO: require in erros middlware
+const cors = require('./lib/cors-middleware.js');
+const errors = require('./lib/error-middleware.js');
 
 const PORT = process.env.PORT || 3000;
 
 app.use(morgan('dev'));
+app.use(cors);
 app.use(skiRouter);
-
-//TODO: set up app.use cors middleware
-//TODO: set up app.use errors middleware
+app.use(errors);
 
 app.listen(PORT, () => {
   debug(`Server up: ${PORT}`);

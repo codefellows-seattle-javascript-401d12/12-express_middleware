@@ -38,4 +38,12 @@ skiRouter.put('/api/ski/:id', jsonparser, function(req, res, next) {
     .catch(next);
 });
 
+skiRouter.delete('/api/ski/:id', function(req, res, next) {
+  debug('DELETE: /api/ski/:id');
+
+  SkiData.deleteData(req.params.id)
+    .then( () => res.status(204).end())
+    .catch(next);
+});
+
 module.exports = skiRouter;
