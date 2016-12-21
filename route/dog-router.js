@@ -14,8 +14,8 @@ dogRouter.post('/api/dog', jsonParser, function(req, res, next) {
   .catch( err => next(err));
 });
 
-dogRouter.get('/api/dog:id', function(req, res, next) {
-  debug('GET: /api/dog:id');
+dogRouter.get('/api/dog/:id', function(req, res, next) {
+  debug('GET: /api/dog/:id');
 
   Dog.fetchDog(req.params.id)
   .then( dog => res.json(dog))

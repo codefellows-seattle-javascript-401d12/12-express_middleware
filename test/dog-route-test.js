@@ -1,7 +1,7 @@
 'use strict';
 
 const expect = require('chai').expect;
-const request = require('bluebird');
+const request = require('superagent');
 const Dog = require('../model/dogs.js');
 const url = 'http://localhost:8000';
 
@@ -15,37 +15,39 @@ const exampleDog = {
 
 describe('Dog Route', function() {
   describe('GET: /api/dog', function() {
-    before( done => {
-      Dog.createDog(exampleDog)
-      .then( dog => {
-        this.tempDog = dog;
-        done();
-      })
-      .catch( err => done(err));
-    });
-    after( done => {
-      Dog.deleteDog(this.tempDog.id)
-      .then( () => done())
-      .catch(done);
-    });
-    it('should return a dog', done => {
-      request.get(`${url}/api/dog/${this.tempDog.id}`)
-      .end((err, res) => {
-        if (err) return done(err);
-        expect(res.status).to.equal(200);
-        expect(res.body.id).to.equal(this.tempDog.id);
-        expect(res.body.name).to.equal(this.tempDog.name);
-        expect(res.body.breed).to.equal(this.tempDog.breed);
-        expect(res.body.color).to.equal(this.tempDog.color);
-        done();
-      });
-    });
-    describe('with an invalid id', function() {
-      it('should respond with 404 status code', done => {
-        request.get(`${url}/api/dog/11111111`)
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
+    describe('with a valid body', function() {
+      before( done => {
+        Dog.createDog(exampleDog)
+        .then( dog => {
+          this.tempDog = dog;
           done();
+        })
+        .catch( err => done(err));
+      });
+      after( done => {
+        Dog.deleteDog(this.tempDog.id)
+        .then( () => done())
+        .catch(done);
+      });
+      it('should return a dog', done => {
+        request.get(`${url}/api/dog/${this.tempDog.id}`)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body.id).to.equal(this.tempDog.id);
+          expect(res.body.name).to.equal(this.tempDog.name);
+          expect(res.body.breed).to.equal(this.tempDog.breed);
+          expect(res.body.color).to.equal(this.tempDog.color);
+          done();
+        });
+      });
+      describe('with an invalid id', function() {
+        it('should respond with 404 status code', done => {
+          request.get(`${url}/api/dog/11111111`)
+          .end((err, res) => {
+            expect(res.status).to.equal(404);
+            done();
+          });
         });
       });
     });

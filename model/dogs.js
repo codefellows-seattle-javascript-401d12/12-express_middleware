@@ -37,7 +37,7 @@ Dog.fetchDog = function(id) {
 Dog.updateDog = function(id, _dog) {
   debug('updateDog');
 
-  return storage.fetchDog('dog', id)
+  return storage.fetchItem('dog', id)
   .catch( err => Promise.reject(createError(404, err.message)))
   .then( dog => {
     for(var prop in dog) {
