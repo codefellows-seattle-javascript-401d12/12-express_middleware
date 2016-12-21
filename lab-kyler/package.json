@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "DEBUG='joke*' node server.js",
+    "start": "node server.js",
+    "debug": "DEBUG='joke*' nodemon server.js",
     "test": "DEBUG='joke*' ./node_modules/mocha/bin/mocha"
   },
   "keywords": [],
@@ -22,6 +23,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^3.2.0",
+    "nodemon": "^1.11.0",
     "superagent": "^3.3.1"
   }
 }

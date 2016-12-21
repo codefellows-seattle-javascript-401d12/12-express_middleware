@@ -18,6 +18,7 @@ exports.storeItem = (schema, item) => {
 };
 
 exports.fetchItem = (schema, id) => {
+  debug('fetchItem method');
   if (!schema) return Promise.reject(createError(400, 'expected schema'));
   if (!id) return exports.enumerate(schema);
 

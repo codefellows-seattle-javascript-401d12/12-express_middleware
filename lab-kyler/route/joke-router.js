@@ -14,8 +14,8 @@ jokeRouter.post('/api/joke', jsonParser, function(req, res, next) {
   .catch( err => next(err));
 });
 
-jokeRouter.get('/api/joke/:id', function(req, res, next) {
-  debug('GET: /api/joke/:id');
+jokeRouter.get('/api/joke/:id/', function(req, res, next) {
+  debug('GET: /api/joke/:id/');
 
   Joke.fetchJoke(req.params.id)
   .then( joke => res.json(joke))
@@ -34,6 +34,14 @@ jokeRouter.put('/api/joke/', jsonParser, function(req, res, next) {
   debug('PUT: /api/joke');
 
   Joke.updateJoke(req.query.id, req.body) //doesn't use parameters like above.
+  .then( joke => res.json(joke))
+  .catch(next);
+});
+
+jokeRouter.delete('/api/joke/:id', function(req, res, next) {
+  debug('DELETE: /api/joke/:id');
+
+  Joke.deleteJoke(req.params.id) //doesn't use parameters like above.
   .then( joke => res.json(joke))
   .catch(next);
 });
