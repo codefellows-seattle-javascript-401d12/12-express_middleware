@@ -41,14 +41,6 @@ describe('Student Router.', () => {
     });
 
     describe('With an invalid object passed in.', () => {
-      after(done => {
-        if (this.tempStudent) {
-          Student.deleteStudent(this.tempStudent.id)
-          .then(() => done())
-          .catch(done);
-        }
-      });
-
       it('Should return a status code of 400', done => {
         request
         .post(`${url}/api/student`)
@@ -56,7 +48,7 @@ describe('Student Router.', () => {
         .end((err, response) => {
           expect(err).to.be.an('error');
           expect(response.status).to.equal(400);
-          expect(response.body).to.equal(undefined);
+          expect(response.body.name).to.equal(undefined);
           done();
         });
       });
