@@ -66,7 +66,7 @@ describe('Player Routes', function() {
 
     // This test assumes that the only items in the collection
     // are the ones we put in for the test.
-    it('should return a list of ids without id', done => {
+    it('should return a list of ids without id param', done => {
       request.get(`${url}`)
       .end( (err, res) => {
         expect(err).to.not.be.an('error');
@@ -150,7 +150,37 @@ describe('Player Routes', function() {
         expect(res.body.name).to.equal(examplePlayer.name);
         expect(res.body.email).to.equal(examplePlayer.email);
         expect(res.body.id).to.be.ok;
-        this.tempPlayer = res.body;
+        this.tempPlayer = res.body; //For cleanup
+        done();
+      });
+    });
+
+    //TODO: Possibly remove following test.
+    //      It is effectively redundant with the missing name
+    //      and missing email tests.
+    it('should 400 with a non-conforming body', done => {
+      request.post(`${url}`)
+      .send( { junk: 'hello', bogus: 'not going to work'} )
+      .end( (err, res) => {
+        expect(res.status).to.equal(400);
+        done();
+      });
+    });
+
+    it('should 400 with a missing name', done => {
+      request.post(`${url}`)
+      .send( { email: 'foo@bar.net'} )
+      .end( (err, res) => {
+        expect(res.status).to.equal(400);
+        done();
+      });
+    });
+
+    it('should 400 with a missing email', done => {
+      request.post(`${url}`)
+      .send( { name: 'Some guy'} )
+      .end( (err, res) => {
+        expect(res.status).to.equal(400);
         done();
       });
     });
