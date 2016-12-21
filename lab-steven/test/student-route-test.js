@@ -22,7 +22,9 @@ describe('Student Router.', () => {
           Student.deleteStudent(this.tempStudent.id)
           .then(() => done())
           .catch(done);
+          return;
         }
+        done();
       });
 
       it('Should return a student object with an age and name.', done => {
@@ -56,22 +58,26 @@ describe('Student Router.', () => {
   });
 
   describe('GET routes.', () => {
-    describe('With a valid ID passed in.', () => {
-      before(done => {
-        Student.createStudent(sampleStudent)
-        .then(student => {
-          this.tempStudent = student;
-          done();
-        })
-        .catch(done);
-      });
+    beforeEach(done => {
+      Student.createStudent(sampleStudent)
+      .then(student => {
+        this.tempStudent = student;
+        done();
+      })
+      .catch(done);
+    });
 
-      after(done => {
+    afterEach(done => {
+      if (this.tempStudent) {
         Student.deleteStudent(this.tempStudent.id)
         .then(() => done())
         .catch(done);
-      });
+        return;
+      }
+      done();
+    });
 
+    describe('With a valid ID passed in.', () => {
       it('Should return a student.', done => {
         request
         .get(`${url}/api/student/${this.tempStudent.id}`)
@@ -98,23 +104,6 @@ describe('Student Router.', () => {
     });
 
     describe('With no ID passed in.', () => {
-      before(done => {
-        Student.createStudent(sampleStudent)
-        .then(student => {
-          this.tempStudent = student;
-          done();
-        })
-        .catch(done);
-      });
-
-      after(done => {
-        if (this.tempStudent) {
-          Student.deleteStudent(this.tempStudent.id)
-          .then(() => done())
-          .catch(done);
-        }
-      });
-
       it('Should respond with an array of all IDs.', done => {
         request
         .get(`${url}/api/student`)
@@ -129,22 +118,26 @@ describe('Student Router.', () => {
   });
 
   describe('PUT routes.', () => {
-    describe('With a valid ID and content passed in.', () => {
-      before(done => {
-        Student.createStudent(sampleStudent)
-        .then(student => {
-          this.tempStudent = student;
-          done();
-        })
-        .catch(done);
-      });
+    beforeEach(done => {
+      Student.createStudent(sampleStudent)
+      .then(student => {
+        this.tempStudent = student;
+        done();
+      })
+      .catch(done);
+    });
 
-      after(done => {
+    afterEach(done => {
+      if (this.tempStudent) {
         Student.deleteStudent(this.tempStudent.id)
         .then(() => done())
         .catch(done);
-      });
+        return;
+      }
+      done();
+    });
 
+    describe('With a valid ID and content passed in.', () => {
       it('Should return an updated student.', done => {
         request
         .put(`${url}/api/student/${this.tempStudent.id}`)
@@ -161,21 +154,6 @@ describe('Student Router.', () => {
     });
 
     describe('With a valid ID, but no content.', () => {
-      before(done => {
-        Student.createStudent(sampleStudent)
-        .then(student => {
-          this.tempStudent = student;
-          done();
-        })
-        .catch(done);
-      });
-
-      after(done => {
-        Student.deleteStudent(this.tempStudent.id)
-        .then(() => done())
-        .catch(done);
-      });
-
       it('Should return a 400 error.', done => {
         request
         .put(`${url}/api/student/${this.tempStudent.id}`)
@@ -189,21 +167,6 @@ describe('Student Router.', () => {
     });
 
     describe('With content, but not a valid ID.', () => {
-      before(done => {
-        Student.createStudent(sampleStudent)
-        .then(student =>  {
-          this.tempStudent = student;
-          done();
-        })
-        .catch(done);
-      });
-
-      after(done => {
-        Student.deleteStudent(this.tempStudent.id)
-        .then(() => done())
-        .catch(done);
-      });
-
       it('Should return a 404 error.', done => {
         request
         .put(`${url}/api/student/69`)
@@ -220,7 +183,7 @@ describe('Student Router.', () => {
 
   describe('DELETE routes.', () => {
     describe('With a valid ID.', () => {
-      before(done => {
+      before (done => {
         Student.createStudent(sampleStudent)
         .then(student => {
           this.tempStudent = student;
@@ -242,21 +205,6 @@ describe('Student Router.', () => {
     });
 
     describe('With an invalid ID.', () => {
-      before(done => {
-        Student.createStudent(sampleStudent)
-        .then(student => {
-          this.tempStudent = student;
-          done();
-        })
-        .catch(done);
-      });
-
-      after(done => {
-        Student.deleteStudent(this.tempStudent.id)
-        .then(() => done())
-        .catch(done);
-      });
-
       it('Should return a 404 error.', done => {
         request
         .delete(`${url}/api/student/69`)
