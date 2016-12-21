@@ -154,7 +154,7 @@ describe('Student Router.', () => {
           expect(response.status).to.equal(200);
           expect(response.body.name).to.equal('Bob');
           expect(response.body.age).to.equal(40);
-          expect(response.body.id).to.equal(sampleStudent.id);
+          expect(response.body.id).to.equal(this.tempStudent.id);
           done();
         });
       });

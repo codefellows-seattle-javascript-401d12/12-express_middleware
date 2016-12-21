@@ -35,7 +35,7 @@ exports.updateItem = function(schemaName, id, content) {
 
   if (!schemaName) throw createError(400, 'Expected a schema name.');
   if (!id) throw createError(400, 'Expected an ID.');
-  if (!content) throw createError(400, 'Expected content to update with.');
+  if (Object.keys(content).length < 1) throw createError(400, 'Expected content to update with.');
 
   return exports.readItem(schemaName, id)
   .then(student => {
