@@ -54,4 +54,60 @@ describe('Student Router.', () => {
       });
     });
   });
+
+  describe('GET routes.', () => {
+    describe('With a valid ID passed in.', () => {
+      before(done => {
+        Student.createStudent(sampleStudent)
+        .then(student => {
+          this.tempStudent = student;
+          done();
+        })
+        .catch(done);
+      });
+
+      after(done => {
+        Student.deleteStudent(this.tempStudent.id)
+        .then(() => done())
+        .catch(done);
+      });
+
+      it('Should return a student.', done => {
+        request
+        .get(`${url}/api/student/${this.tempStudent.id}`)
+        .end((err, response) => {
+          expect(response.status).to.equal(200);
+          expect(response.body.name).to.equal(sampleStudent.name);
+          expect(response.body.age).to.equal(sampleStudent.age);
+          done();
+        });
+      });
+    });
+
+    describe('With an invalid ID passed in.', () => {
+      it('Should respond with a 404 status.', done => {
+        request
+        .get(`${url}/api/student/69`)
+        .end((err, response) => {
+          expect(err).to.be.an('error');
+          expect(response.status).to.equal(404);
+          expect(response.body.name).to.equal(undefined);
+          done();
+        });
+      });
+    });
+
+    describe('With no ID passed in.', () => {
+      it('Should respond with an array of all IDs.', done => {
+        request
+        .get(`${url}/api/student`)
+        .end((err, response) => {
+          expect(response.status).to.equal(200);
+          expect(response.body).to.be.an('object');
+          expect(response.body).to.be.at.least(1);
+          done();
+        });
+      });
+    });
+  });
 });
