@@ -56,7 +56,7 @@ exports.updateItem = function(collection, id, _item) {
     }
     // Calling createItem seems weird here, but we are essentially
     // just overwriting the object that was there.
-    return this.cteateItem(collection, item);
+    return this.createItem(collection, item);
   })
   .catch( err => Promise.reject(createError(404, err.message)));
 };
