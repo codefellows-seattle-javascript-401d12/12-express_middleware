@@ -3,7 +3,7 @@
 const SkiData = require('../model/ski-data.js');
 const expect = require('chai').expect;
 const request = require('superagent');
-const url = 'http://localhost:3000';
+const debug = require('debug')('ski:constructor-test');
 
 require('../server.js');
 
@@ -14,6 +14,8 @@ const testObj = {
 
 describe('Object Constructor', function() {
   describe('Create new SkiData', function() {
+    debug('Create new SkiData');
+    
     before( function() {
       this.testObj = new SkiData(testObj.location, testObj.rating);
     });
