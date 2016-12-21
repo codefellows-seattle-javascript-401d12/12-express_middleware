@@ -120,14 +120,6 @@ describe('Player Routes', function() {
         done();
       });
     });
-
-    // it('should 400 with no id', done => {
-    //   request.delete(`${url}`)
-    //   .end( (err, res) => {
-    //     expect(res.status).to.equal(400);
-    //     done();
-    //   });
-    // });
   });
 
   describe('POST /api/player', function() {
@@ -146,23 +138,11 @@ describe('Player Routes', function() {
       request.post(`${url}`)
       .send(examplePlayer)
       .end( (err, res) => {
-        expect(res.status).to.equal(200); //TODO: Change to 201
+        expect(res.status).to.equal(201);
         expect(res.body.name).to.equal(examplePlayer.name);
         expect(res.body.email).to.equal(examplePlayer.email);
         expect(res.body.id).to.be.ok;
         this.tempPlayer = res.body; //For cleanup
-        done();
-      });
-    });
-
-    //TODO: Possibly remove following test.
-    //      It is effectively redundant with the missing name
-    //      and missing email tests.
-    it('should 400 with a non-conforming body', done => {
-      request.post(`${url}`)
-      .send( { junk: 'hello', bogus: 'not going to work'} )
-      .end( (err, res) => {
-        expect(res.status).to.equal(400);
         done();
       });
     });
@@ -214,7 +194,7 @@ describe('Player Routes', function() {
       .send(update)
       .end( (err, res) => {
         expect(err).to.not.be.an('error');
-        expect(res.status).to.equal(200); //TODO: Change to 202
+        expect(res.status).to.equal(202);
         expect(res.body.name).to.equal(update.name);
         expect(res.body.email).to.equal(examplePlayer.email); //Not modified
         expect(res.body.id).to.equal(this.tempPlayer.id);

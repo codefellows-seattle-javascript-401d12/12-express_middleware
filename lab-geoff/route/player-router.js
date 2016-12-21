@@ -11,7 +11,7 @@ const router = module.exports = new Router();
 router.post('/api/player', jsonParser, function(req, res, next) {
   debug('POST: /api/player');
   Player.create(req.body)
-  .then( player => res.json(player))
+  .then( player => res.status(201).json(player))
   .catch(next);
 });
 
@@ -32,15 +32,13 @@ router.get('/api/player', function(req, res, next) {
 router.put('/api/player/:id', jsonParser, function(req, res, next) {
   debug('PUT /api/player/:id');
   Player.update(req.params.id, req.body)
-  .then( player => res.json(player))
+  .then( player => res.status(202).json(player))
   .catch(next);
 });
 
 router.delete('/api/player/:id', function(req, res, next) {
   debug('DELETE: /api/player/:id', req.params.id);
   Player.delete(req.params.id)
-  .then( player => {
-    res.status(204).json(player);
-  })
+  .then( player => res.status(204).json(player))
   .catch(next);
 });
