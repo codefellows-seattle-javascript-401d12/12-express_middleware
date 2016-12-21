@@ -14,15 +14,15 @@ noteRouter.post('/api/note', jsonParser, function(req, res, next){
   debug('POST: /api/note');
 
   Note.createNote(req.body)
-  .then(note => res.send(note))
+  .then(note => res.json(note))
   .catch(next);
 });
 
 noteRouter.get('/api/note', function(req, res, next){
   debug('GET: /api/note');
-  console.log(req.query.id);
+
   return Note.read(req.query.id)
-  .then( note => res.send(note))
+  .then( note => res.json(note))
   .catch(next);
 });
 
@@ -31,14 +31,15 @@ noteRouter.put('/api/note', jsonParser, function(req, res, next){
   debug('PUT: /api/note');
 
   Note.update(req.body)
-  .then(note => res.send(note))
+  .then(note => res.json(note))
   .catch(next);
 });
-noteRouter.availIDs('/api/note', function(req, res, next){
+
+noteRouter.get('/api/note/availIDs', function(req, res, next){
   debug('availIDs: /api/note');
 
   Note.availIDs()
-  .then( arr => res.send(arr))
+  .then( arr => res.json(arr))
   .catch(next);
 });
 
@@ -46,6 +47,6 @@ noteRouter.delete( '/api/note', function(req, res, next){
   debug('DELETE: /api/note');
 
   Note.delete(req.query.id)
-  .then( msg => res.send(msg))
+  .then( msg => res.json(msg))
   .catch(next);
 });
