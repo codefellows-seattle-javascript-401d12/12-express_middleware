@@ -23,6 +23,7 @@ describe('Player Routes', function() {
 
   describe('GET /api/player', function() {
     before( done => {
+      //TODO: Consider making a list of players.
       Player.create(examplePlayer)
       .then( player => {
         this.tempPlayer = player;
@@ -61,6 +62,8 @@ describe('Player Routes', function() {
       });
     });
 
+    // This test assumes that the only items in the collection
+    // are the ones we put in for the test.
     it('should return a list of ids without id', done => {
       request.get(`${url}`)
       .end( (err, res) => {
@@ -96,5 +99,5 @@ describe('Player Routes', function() {
       });
     });
   });
-  
+
 });
