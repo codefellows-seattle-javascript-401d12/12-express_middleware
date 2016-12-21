@@ -37,8 +37,8 @@ Hat.updateHat = function(id, _hat) {
 
   return storage.fetchItm('hat', id)
   .catch( err => Promise.reject(createError(404, err.message)))
-  .then( note => {
-    for (var prop in note) {
+  .then( hat => {
+    for (var prop in hat) {
       if (prop === 'id') continue;
       if (_hat[prop]) hat[prop] = _hat[prop];
     }
