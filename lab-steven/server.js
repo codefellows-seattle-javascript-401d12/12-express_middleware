@@ -9,8 +9,8 @@ const studentRouter = require('./route/student-router.js');
 const PORT = process.env.PORT || 8080;
 
 app.use(morgan('dev'));
-app.use(studentRouter);
 app.use(cors);
+app.use(studentRouter);
 app.use(error);
 
 app.listen(PORT, () => {
