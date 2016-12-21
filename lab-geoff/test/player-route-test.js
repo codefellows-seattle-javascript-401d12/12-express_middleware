@@ -3,7 +3,6 @@
 const expect = require('chai').expect;
 const request = require('superagent');
 const Player = require('../model/player.js');
-// const debug = require('debug')('mnp:player-route-test');
 
 const server = require('../server.js');
 const PORT = server.PORT;
@@ -39,14 +38,27 @@ describe('Player Routes', function() {
       }
     });
 
-    it('should return a player', done => {
+    it('should return a player with a valid id', done => {
       request.get(`${url}/${this.tempPlayer.id}`)
       .end( (err, res) => {
         if(err) return done(err);
-        // expect(err).to.not.be.an('error');
+        expect(err).to.not.be.an('error');
         expect(res.status).to.equal(200);
+        expect(res.body.name).to.equal(examplePlayer.name);
+        expect(res.body.email).to.equal(examplePlayer.email);
+        expect(res.body).to.have.property('id');
         done();
       });
     });
+
+    it('should return a 404 with a bogus id', done => {
+      request.get(`${url}/bogus1234`)
+      .end( (err, res) => {
+        expect(res.status).to.equal(404);
+        expect(err).to.be.an('error');
+        done();
+      });
+    });
+
   });
 });
