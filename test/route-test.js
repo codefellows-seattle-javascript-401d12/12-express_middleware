@@ -32,7 +32,7 @@ describe('GET: test', function(){
       request.get(`${url}?id=${this.tempNote.id}`)
       .end((err, res) => {
         if(err) return done(err);
-        console.log('tempNote.id:- ', this.tempNote.id, '\nres.id:- ', res.body);
+
         expect(res.status).to.equal(200);
         expect(res.body.id).to.equal(this.tempNote.id);
         expect(res.body.name).to.equal(this.tempNote.name);
@@ -41,4 +41,63 @@ describe('GET: test', function(){
       });
     });
   });
+});
+
+describe('POST: /api/note', function(){
+  describe('generate note', function(){
+    after(done => {
+      Note.delete(this.id)
+      .then( () => done())
+      .catch(done);
+    });
+    it('it should generate a note', done => {
+      request.post(`${url}`)
+      .send({name:'example', content: 'sample content for test'})
+      .end((err, res) => {
+        if(err) return done(err);
+
+        this.id = res.body.id;
+        expect(res.body).to.have.property('id');
+        expect(res.body).to.have.property('name');
+        expect(res.body.name).to.equal(sampleNote.name);
+        expect(res.body).to.have.property('content');
+        expect(res.body.content).to.equal(sampleNote.content);
+        done();
+      });
+    });
+  });
+});
+
+describe('PUT: /api/note', function(){
+  describe('it should update the context', function(){
+    before( done => {
+      Note.createNote(sampleNote)
+      .then( note => {
+        this.tempNote = note;
+        done();
+      })
+      .catch( err => done(err));
+    });
+
+    after(done => {
+      Note.delete(this.tempNote.id)
+      .then( () => done())
+      .catch(done);
+    });
+    it('should update ', done => {
+      request.put(`${url}`)
+      .send({name:'update example', content: 'update sample content for test', id: `${this.tempNote.id}`})
+      .end( (err, res) => {
+        if(err) return done(err);
+
+        expect(res.body.id).to.equal(this.tempNote.id);
+        expect(res.body.name).to.not.equal(this.tempNote.name);
+        expect(res.body.name).to.equal('update example');
+        expect(res.body.content).to.not.equal(this.tempNote.content);
+        expect(res.body.content).to.equal('update sample content for test');
+        done();
+      });
+    });
+  });
+
 });
