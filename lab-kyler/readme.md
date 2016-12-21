@@ -16,5 +16,7 @@ Server runs on `$PORT` or defaults to 2000.
  * `http get localhost:2000/api/joke`
 * Retrieve a joke:
  * `http get localhost:2000/api/joke?id=<id>`
+* Update a joke:
+ * `http put localhost:2000/api/joke?id=<id> setup=<new setup> punchline=<new punchline>`
 * Delete a joke:
  * `http delete localhost:2000/api/joke/id=<id>`
