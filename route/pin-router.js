@@ -29,3 +29,13 @@ pinRouter.get('/api/pin', function(req, res, next) {
   .then(ids => res.json(ids))
   .catch(next);
 });
+
+pinRouter.put('/api/pin', jsonParser, function(req, res, next) {
+  debug('PUT: /api/pin');
+
+  Pin.updatePin(req.query.id, req.body)
+  .then(pin => res.json(pin))
+  .catch(next);
+});
+
+module.exports = pinRouter;
