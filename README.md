@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a basic Express API app that allows a developer to POST, PUT and GET data from an API. A developer should be able to see the appropriate response statuses when interacting with the API.
+This is a basic Express API app that allows a developer to POST, PUT and GET data from an API. A developer will be able to view the appropriate response statuses when interacting with the API.
 
 ## How do I use this app?
 
@@ -22,7 +22,7 @@ This is a basic Express API app that allows a developer to POST, PUT and GET dat
     * You should receive a response with a 'Bad Request' message.
 
 ### PUT requests
-  * **i.e.** 200 OK request: `http PUT :3000/api/pin?id=292873e0-c7af-11e6-8037-af3dde2fd6df title="different title" skill="different skill"`
+  * **i.e.** 200 OK request: `http PUT localhost:3000/api/pin?id=292873e0-c7af-11e6-8037-af3dde2fd6df title="different title" skill="different skill"`
     * You must pass in a query string equal to the unique id of the pin you want to delete.
     * You can change the title and skill content by passing them in after the unique pin id.
   * **i.e.** 400 BAD request: `http localhost:3000/api/pin`
