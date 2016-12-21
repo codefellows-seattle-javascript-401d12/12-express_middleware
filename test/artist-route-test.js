@@ -73,7 +73,7 @@ describe('Artist Routes', function() {
           expect(res.status).to.equal(200);
           expect(res.body.name).to.equal(exampleArtist.name);
           expect(res.body.content).to.equal(exampleArtist.content);
-          this.tempNote = res.body;
+          this.tempArtist = res.body;
           done();
         });
       });
