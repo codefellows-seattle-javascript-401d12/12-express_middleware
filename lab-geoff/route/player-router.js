@@ -8,7 +8,7 @@ const Player = require('../model/player.js');
 
 const router = module.exports = new Router();
 
-router.post('/api/player', function(req, res, next) {
+router.post('/api/player', jsonParser, function(req, res, next) {
   debug('POST: /api/player');
   Player.create(req.body)
   .then( player => res.json(player))
@@ -29,7 +29,7 @@ router.get('/api/player', function(req, res, next) {
   .catch(next);
 });
 
-router.put('/api/player/:id', function(req, res, next) {
+router.put('/api/player/:id', jsonParser, function(req, res, next) {
   debug('PUT /api/player/:id');
   Player.update(req.params.id, req.body)
   .then( player => res.json(player))
