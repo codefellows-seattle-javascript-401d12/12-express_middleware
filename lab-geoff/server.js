@@ -9,11 +9,9 @@ const app = express();
 
 app.use(morgan('dev'));
 app.use(require('./lib/cors-middleware.js'));
-
-//TODO: Add router
-
+app.use(require('./route/player-router.js'));
 app.use(require('./lib/error-middleware.js'));
 
-app.list(PORT, () => {
+app.listen(PORT, () => {
   debug('Server up:', PORT);
 });
