@@ -14,11 +14,28 @@ skiRouter.post('/api/ski', jsonparser, function(req, res, next) {
     .catch(next);
 });
 
+skiRouter.get('/api/ski/:id', function(req, res, next) {
+  debug('GET: /api/ski/:id');
 
-//TODO: set up get route by :id
+  SkiData.getData(req.params.id)
+    .then( skiData => res.json(skiData))
+    .catch(next);
+});
 
-//TODO: set up get route all ids
+skiRouter.get('/api/ski', function(req, res, next) {
+  debug('GET: /api/ski');
 
-//TODO: set up put route
+  SkiData.getAllData()
+    .then( skiData => res.json(skiData))
+    .catch(next);
+});
 
-//TODO: add module.exports for ski router
+skiRouter.put('/api/ski/:id', jsonparser, function(req, res, next) {
+  debug('PUT: /api/ski');
+
+  SkiData.updateData(req.params.id, req.body)
+    .then( skiData => res.json(skiData))
+    .catch(next);
+});
+
+module.exports = skiRouter;
