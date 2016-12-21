@@ -29,3 +29,21 @@ exports.readItem = function(schemaName, id) {
   .then(data => JSON.parse(data.toString()))
   .catch(err => Promise.reject(createError(404, err.message)));
 };
+
+exports.updateItem = function(schemaName, id, content) {
+  debug('Storage.js: updateItem method.');
+
+  if (!schemaName) throw createError(400, 'Expected a schema name.');
+  if (!id) throw createError(400, 'Expected an ID.');
+  if (!content) throw createError(400, 'Expected content to update with.');
+
+  exports.readItem(schemaName, id)
+  .then(student => {
+    for (var key in content) {
+      if (key === 'id') continue;
+      student[key] = content[key];
+    }
+    exports.createItem(schemaName, student);
+  })
+  .catch(err => Promise.reject(createError(404, err.message)));
+};
