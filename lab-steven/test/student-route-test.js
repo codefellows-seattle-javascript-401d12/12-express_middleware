@@ -127,4 +127,94 @@ describe('Student Router.', () => {
       });
     });
   });
+
+  describe('PUT routes.', () => {
+    describe('With a valid ID and content passed in.', () => {
+      before(done => {
+        Student.createStudent(sampleStudent)
+        .then(student => {
+          this.tempStudent = student;
+          done();
+        })
+        .catch(done);
+      });
+
+      after(done => {
+        Student.deleteStudent(this.tempStudent.id)
+        .then(() => done())
+        .catch(done);
+      });
+
+      it('Should return an updated student.', done => {
+        request
+        .put(`${url}/api/student/${this.tempStudent.id}`)
+        .send({name: 'Bob', age: 40})
+        .end((err, response) => {
+          if (err) return done(err);
+          expect(response.status).to.equal(200);
+          expect(response.body.name).to.equal('Bob');
+          expect(response.body.age).to.equal(40);
+          expect(response.body.id).to.equal(sampleStudent.id);
+          done();
+        });
+      });
+    });
+
+    describe('With a valid ID, but no content.', () => {
+      before(done => {
+        Student.createStudent(sampleStudent)
+        .then(student => {
+          this.tempStudent = student;
+          done();
+        })
+        .catch(done);
+      });
+
+      after(done => {
+        Student.deleteStudent(this.tempStudent.id)
+        .then(() => done())
+        .catch(done);
+      });
+
+      it('Should return a 400 error.', done => {
+        request
+        .put(`${url}/api/student/${this.tempStudent.id}`)
+        .end((err, response) => {
+          expect(err).to.be.an('error');
+          expect(response.status).to.equal(400);
+          expect(response.body.name).to.equal(undefined);
+          done();
+        });
+      });
+    });
+
+    describe('With content, but not a valid ID.', () => {
+      before(done => {
+        Student.createStudent(sampleStudent)
+        .then(student =>  {
+          this.tempStudent = student;
+          done();
+        })
+        .catch(done);
+      });
+
+      after(done => {
+        Student.deleteStudent(this.tempStudent.id)
+        .then(() => done())
+        .catch(done);
+      });
+
+      it('Should return a 404 error.', done => {
+        request
+        .put(`${url}/api/student/69`)
+        .send({name: 'Steven', age: '88'})
+        .end((err, response) => {
+          expect(err).to.be.an('error');
+          expect(response.status).to.equal(404);
+          expect(response.body.name).to.equal(undefined);
+          done();
+        });
+      });
+    });
+  });
 });
