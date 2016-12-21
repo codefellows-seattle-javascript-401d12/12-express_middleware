@@ -6,7 +6,7 @@ const debug = require('debug')('pin:pin-router');
 const Pin = require('../model/pin.js');
 const pinRouter = new Router();
 
-pinRouter.post('api/pin', jsonParser, function(req, res, next) {
+pinRouter.post('/api/pin', jsonParser, function(req, res, next) {
   debug('POST: /api/pin');
 
   Pin.createPin(req.body)

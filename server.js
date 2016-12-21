@@ -8,7 +8,7 @@ const errors = require('./lib/error-middleware.js');
 const debug = require('debug')('pin:server');
 const pinRouter = require('./route/pin-router.js');
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 const app = express();
 
 app.use(morgan('dev'));
