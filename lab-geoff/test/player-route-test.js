@@ -60,5 +60,16 @@ describe('Player Routes', function() {
       });
     });
 
+    it('should return a list of ids without id', done => {
+      request.get(`${url}`)
+      .end( (err, res) => {
+        expect(err).to.not.be.an('error');
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.an('array');
+        expect(res.body).to.deep.equal([this.tempPlayer.id]);
+        done();
+      });
+    });
+
   });
 });
