@@ -53,6 +53,6 @@ exports.availIDs = function(schemaName) {
   if (!schemaName) return Promise.reject(createError(400, 'expected schema name')); // NOTE: I added this line
 
   return fs.readdirProm(`${__dirname}/../data/${schemaName}`)
-  .then ( files => files.map(name => name.split('.json')[0]))
+  .then ( files => files.map(color => color.split('.json')[0]))
   .catch( err => Promise.reject(createError(404, err.message)));
 };
