@@ -17,10 +17,10 @@
   * `README.md`
 
 ## Description
-  * Create a single resource `express` API that can handle **GET**, **POST**, and **PUT** requests
+  <!-- * Create a single resource `express` API that can handle **GET**, **POST**, and **PUT** requests
   * Use the `http-errors` module to create new errors and associate them with a proper status code
   * Create an `error-middleware` module to handle errors and *use* it in your server file
-  * Create a `cors-middleware` module that will allow for public use of your API
+  * Create a `cors-middleware` module that will allow for public use of your API -->
   * Create the `deleteItem` and `availIDs` methods and add them to your `storage` module
     * these methods should be used to delete a resource (`deleteItem`) and return an array of id's from persisted resource filenames (`availIDs`)
   * Create the `updateNote`, `fetchNote`, and `fetchIDs` static methods as part of your `Note` model
