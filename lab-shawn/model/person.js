@@ -31,7 +31,7 @@ Person.fetchPerson = function(id){
   debug('fetchPerson');
 
   return storage.fetchInstance('person', id);
-}
+};
 
 Person.updatePerson = function(id, _person){
   debug('updatePerson');
@@ -57,4 +57,4 @@ Person.fetchIDs = function(){
   debug('fetchIDs');
 
   return storage.availableIDs('person');
-}
+};

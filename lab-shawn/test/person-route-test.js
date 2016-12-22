@@ -77,32 +77,32 @@ describe('Person Routes', function(){
           expect(res.body.gender).to.equal(examplePerson.gender);
           this.tempPerson = res.body;
           done();
-        })
-      })
+        });
+      });
     });
   });
   describe('PUT: /api/person', function(){
     describe('with a valid body and id', function(){
-        before(done => {
-          Person.createPerson(examplePerson)
+      before(done => {
+        Person.createPerson(examplePerson)
           .then(person => {
             this.tempPerson = person;
             done();
           })
           .catch(done);
-        });
+      });
 
-        after( done => {
-          if( this.tempPerson){
-            Person.deletePerson(this.tempPerson.id)
+      after( done => {
+        if( this.tempPerson){
+          Person.deletePerson(this.tempPerson.id)
             .then( () => done())
             .catch(done);
-          }
-        });
+        }
+      });
 
-        it('should return a person', () => {
-          let updatePerson = {name: 'new name', gender:'new gender'};
-          request.put(`${url}/api/person?id=${this.tempPerson.id}`)
+      it('should return a person', done => {
+        let updatePerson = {name: 'new name', gender:'new gender'};
+        request.put(`${url}/api/person?id=${this.tempPerson.id}`)
           .send(updatePerson)
           .end((err,res) => {
             if(err) return done(err);
@@ -110,7 +110,7 @@ describe('Person Routes', function(){
             expect(res.body.id).to.equal(this.tempPerson.id);
             done();
           });
-        })
+      });
     });
   });
 });

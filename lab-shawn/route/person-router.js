@@ -2,7 +2,7 @@
 
 const Router = require('express').Router;
 const jsonParser = require('body-parser').json();
-const debug = require('debug')('person:person-router')
+const debug = require('debug')('person:person-router');
 const Person = require('../model/person.js');
 const personRouter = new Router();
 

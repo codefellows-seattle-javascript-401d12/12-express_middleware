@@ -2,7 +2,6 @@
 
 const morgan = require('morgan');
 const express = require('express');
-const createError = require('http-errors');
 const debug = require('debug')('person:server');
 const cors = require('./lib/cors-middleware.js');
 const errors = require('./lib/err-middleware.js');

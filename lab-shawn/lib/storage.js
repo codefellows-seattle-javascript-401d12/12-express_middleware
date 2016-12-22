@@ -56,4 +56,4 @@ exports.availableIDs = function(schemaName){
   return fs.readDirProm(`${__dirname}/../data/${schemaName}`)
   .then(files => files.map(person => person.split('.json')[0]))
   .catch( err => Promise.reject(createError(404,err.message)));
-}
+};
