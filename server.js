@@ -8,6 +8,8 @@ const debug = require('debug')('bev:server');
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+app.use(morgan('dev'));
+
 app.listen(PORT, () => {
   console.log(`SERVER RUNNING ON PORT ${PORT}`);
 });
