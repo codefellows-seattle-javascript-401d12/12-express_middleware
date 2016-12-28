@@ -24,11 +24,44 @@ const BEV = module.exports = function(vehicle, info, range, mpge) {
 BEV.createVehicle = function(_vehicle) {
   debug('createVehicle');
 
-  // TODO: build out createVehicle functionality
+  try {
+    let newBEV = new BEV(_newBEV.vehicle, _newBEV.info);
+    return storage.createEntry('bev', newBEV)
+  } catch (err) {
+    return Promise.reject(createError(400, err.message));
+  };
 };
 
 BEV.retrieveVehicle = function(id) {
   debug('retrieveVehicle');
 
-  // TODO: build out retrieveVehicle functionality
+  try {
+    return storage.retrieveEntry('bev', id);
+  } catch (err) {
+    return Promise.reject(createError(404, err.message));
+  };
+};
+
+BEV.updateVehicle = function(id, _bev) {
+  debug('updateVehicle');
+
+  return storage.retrieveEntry('bev', id)
+  .catch( err => Promise.reject(createError(404, err.message)))
+  .then( bev => {
+    for (var prop in bev) {
+      if (prop === 'id') continue;
+      if (_bev[prop]) bev[prop] = _bev[prop];
+    };
+    return storage.createEntry('bev', bev);
+  });
+};
+
+BEV.deleteVehicle = function(id) {
+  debug('deleteVehicle');
+  return storage.deleteEntry('bev', id);
+};
+
+BEV.retrieveAllVehicleIDs = function() {
+  debug('retrieveAllVehicleIDs');
+  return storage.retrieveAll('bev');
 };
