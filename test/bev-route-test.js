@@ -16,7 +16,7 @@ const exampleVehicle = {
 
 describe('BEV Routes', function() {
 
-  describe('GET: /api/bev', function() {
+  describe('GET: /api/bev/:id', function() {
 
     describe('with a valid body', function() {
       before( done => {
@@ -83,6 +83,34 @@ describe('BEV Routes', function() {
     });
   });
 
+  describe('GET: /api/bev/ (get all IDs)', function() {
+    describe('with a valid body', function() {
+      before( done => {
+        BEV.createVehicle(exampleVehicle)
+        .then( vehicle => {
+          this.tempVehicle = vehicle;
+          done();
+        })
+        .catch( err => done(err));
+      });
+      after( done => {
+        BEV.deleteVehicle(this.tempVehicle.id)
+        .then( () => done())
+        .catch(done);
+      });
+
+      it('should return an array of IDs for all vehicle data entries', done => {
+        request.get(`${url}/api/bev`)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('array');
+          expect(res.body).to.include(this.tempVehicle.id);
+          done();
+        });
+      });
+    });
+  });
 
   // describe('DELETE')
 });
