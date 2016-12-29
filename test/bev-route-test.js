@@ -152,5 +152,28 @@ describe('BEV Routes', function() {
     });
   });
 
-  // describe('DELETE')
+  describe('DELETE: /api/bev/:id', function() {
+    describe('with a valid body and ID', function() {
+      before( done => {
+        BEV.createVehicle(exampleVehicle)
+        .then( vehicle => {
+          this.tempVehicle = vehicle;
+          done();
+        })
+        .catch( err => done(err));
+      });
+
+      it ('should return a \'No Content\' success status', done => {
+        request.delete(`${url}/api/bev/${this.tempVehicle.id}`)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(204);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.be.empty;
+          done();
+        });
+
+      });
+    });
+  });
 });
