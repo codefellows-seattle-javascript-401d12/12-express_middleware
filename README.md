@@ -2,8 +2,6 @@
 
 In the last decade, Electric vehicles have exploded in popularity with the advent of new battery technologies and practical vehicles hitting the market, from flashy luxury models like Tesla's Model S, to affordable commuter/family models like Nissan's Leaf. As technology improves and better, more affordable models hit the market, Electric vehicles have the potential to make a serious dent in pollution from automotive transportation. This is especially true in markets with relatively green power grids.
 
-The purpose of this API is ultimately to be a resource for consumers interested in Electric Vehicles and green transportation in general, containing the most up-to-date information on Electric Vehicles. Info such as market availability, quick-charging options and standards, and more technical specs will eventually be added.
-
 For this API, we define "Electric Vehicles" more technically and specifically as "Battery-Electric Vehicles," or BEVs. Only vehicles that are powered exclusively by electricity from a battery are included. This designation excludes plug-in-hybrid vehicles (like the Chevrolet Volt) and hydrogen fuel cell vehicles.
 
 The API saves and returns entries for individual vehicles as JSON objects. Each vehicle object has 4 properties:
@@ -11,6 +9,8 @@ The API saves and returns entries for individual vehicles as JSON objects. Each 
   * info -- Details about vehicle. Example: "practical and affordable hatchback". **Must be a string.**
   * range -- Vehicle's EPA-rated range on a full charge, in miles. **Must be a number.**
   * mpge -- Vehicle's EPA-rated "miles-per-gallon equivalent" (MPGe). **Must be a number.**
+
+The purpose of this API is ultimately to be a resource for consumers interested in Electric Vehicles and green transportation in general, containing the most up-to-date information on Electric Vehicles. Info such as market availability, quick-charging options and standards, and more technical specs will eventually be added (as additional API properties).
 
 ## How to use this API
 
