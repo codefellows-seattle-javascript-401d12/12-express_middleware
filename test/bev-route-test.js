@@ -51,6 +51,7 @@ describe('BEV Routes', function() {
         request.get(`${url}/api/bev/dummy-id`)
         .end((err, res) => {
           expect(res.status).to.equal(404);
+          expect(res.text).to.equal('NotFoundError');
           done();
         });
       });
@@ -106,6 +107,45 @@ describe('BEV Routes', function() {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an('array');
           expect(res.body).to.include(this.tempVehicle.id);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('PUT: /api/bev', function() {
+    describe('with a valid body and ID', function() {
+      before( done => {
+        BEV.createVehicle(exampleVehicle)
+        .then( vehicle => {
+          this.tempVehicle = vehicle;
+          done();
+        })
+        .catch( err => done(err));
+      });
+      after( done => {
+        if (this.tempVehicle) {
+          BEV.deleteVehicle(this.tempVehicle.id)
+          .then( () => done())
+          .catch(done);
+        };
+      });
+
+      it('should return data for a vehicle', done => {
+        let updatedVehicleData = {
+          vehicle: 'Updated Make Model',
+          info: 'Info about the updated vehicle',
+          range: 80,
+          mpge: 120
+        };
+        request.put(`${url}/api/bev?id=${this.tempVehicle.id}`)
+        .send(updatedVehicleData)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body.id).to.equal(this.tempVehicle.id);
+          expect(res.body.info).to.equal(updatedVehicleData.info);
+          expect(res.body.mpge).to.be.a('number');
           done();
         });
       });
