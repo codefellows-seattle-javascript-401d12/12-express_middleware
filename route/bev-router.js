@@ -27,7 +27,7 @@ bevRouter.get('/api/bev', function(req, res, next) {
 
   BEV.retrieveAllVehicleIDs()
   .then( vehicleIDs => res.json(vehicleIDs))
-  .catch(next);
+  .catch( err => next(err));
 });
 
 bevRouter.put('/api/bev', jsonParser, function(req, res, next) {
@@ -35,7 +35,15 @@ bevRouter.put('/api/bev', jsonParser, function(req, res, next) {
 
   BEV.updateVehicle(req.query.id, req.body)
   .then( bev => res.json(bev))
-  .catch(next);
+  .catch( err => next(err));
+});
+
+bevRouter.delete('/api/bev/:id', function(req, res, next) {
+  debug('DELETE: /api/bev/:id');
+
+  BEV.deleteVehicle(req.params.id)
+  .then(res.send(204))
+  .catch( err => next(err));
 });
 
 module.exports = bevRouter;
