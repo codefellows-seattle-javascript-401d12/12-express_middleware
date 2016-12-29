@@ -27,7 +27,6 @@ Temporary Items
 
 ### Node ###
 node_modules
-data
 # Logs
 logs
 *.log
