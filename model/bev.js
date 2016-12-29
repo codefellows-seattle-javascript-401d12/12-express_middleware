@@ -21,11 +21,11 @@ const BEV = module.exports = function(vehicle, info, range, mpge) {
   this.mpge = mpge;
 };
 
-BEV.createVehicle = function(_vehicle) {
+BEV.createVehicle = function(_newBEV) {
   debug('createVehicle');
 
   try {
-    let newBEV = new BEV(_newBEV.vehicle, _newBEV.info);
+    let newBEV = new BEV(_newBEV.vehicle, _newBEV.info, _newBEV.range, _newBEV.mpge);
     return storage.createEntry('bev', newBEV)
   } catch (err) {
     return Promise.reject(createError(400, err.message));
