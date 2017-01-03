@@ -15,6 +15,32 @@ const exampleSpiritAnimal = {
 
 describe('Spirit Animal Route', function() {
 
+  describe('POST: /api/spiritAnimal', function() {
+    describe('with an valid body', function() {
+      after( done => {
+        if(this.tempSpiritAnimal) {
+          SpiritAnimal.deleteSpiritAnimal(this.tempSpiritAnimal.id)
+          .then( () => done())
+          .catch(done);
+        }
+      });
+
+      it('should return a spiritAnimal', done => {
+        request.post(`${url}/api/spiritAnimal`)
+        .send(exampleSpiritAnimal)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body.name).to.equal(exampleSpiritAnimal.name);
+          expect(res.body.spiritAnimal).to.equal(exampleSpiritAnimal.spiritAnimal);
+          expect(res.body.spiritAnimalName).to.equal(exampleSpiritAnimal.spiritAnimalName);
+          this.tempSpiritAnimal = res.body;
+          done();
+        });
+      });
+    });
+  });
+
   describe('GET: /api/spiritAnimal', function() {
     describe('with a valid body', function() {
       before( done => {
@@ -57,61 +83,38 @@ describe('Spirit Animal Route', function() {
     });
   });
 
-});
-describe('POST: /api/spiritAnimal', function() {
-  describe('with an valid body', function() {
-    after( done => {
-      if(this.tempSpiritAnimal) {
-        SpiritAnimal.deleteSpiritAnimal(this.tempSpiritAnimal.id)
-        .then( () => done())
+  describe('PUT: /api/spiritAnimal', function() {
+    describe('with a valid body and id', function() {
+      before( done => {
+        SpiritAnimal.createSpiritAnimal(exampleSpiritAnimal)
+        .then( spiritAnimal => {
+          this.tempSpiritAnimal = spiritAnimal;
+          done();
+        })
         .catch(done);
-      }
-    });
-
-    it('should return a spiritAnimal', done => {
-      request.post(`${url}/api/spiritAnimal`)
-      .send(exampleSpiritAnimal)
-      .end((err, res) => {
-        if (err) return done(err);
-        expect(res.status).to.equal(200);
-        expect(res.body.name).to.equal(exampleSpiritAnimal.name);
-        expect(res.body.spiritAnimal).to.equal(exampleSpiritAnimal.spiritAnimal);
-        expect(res.body.spiritAnimalName).to.equal(exampleSpiritAnimal.spiritAnimalName);
-        this.tempSpiritAnimal = res.body;
-        done();
       });
-    });
-  });
-});
 
-describe('PUT: /api/spiritAnimal', function() {
-  describe('with a valid body and id', function() {
-    before( done => {
-      SpiritAnimal.createSpiritAnimal(exampleSpiritAnimal)
-      .then( spiritAnimal => {
-        this.tempSpiritAnimal = spiritAnimal;
-        done();
-      })
-      .catch(done);
-    });
+      after( done => {
+        if (this.tempSpiritAnimal) {
+          SpiritAnimal.deleteSpiritAnimal(this.tempSpiritAnimal.id)
+          .then( () => done())
+          .catch(done);
+        }
+      });
 
-    after( done => {
-      if (this.tempSpiritAnimal) {
-        SpiritAnimal.deleteSpiritAnimal(this.tempSpiritAnimal.id)
-        .then( () => done())
-        .catch(done);
-      }
-    });
-
-    it('should return a spiritAnimal', done => {
-      let updateSpiritAnimal = { name: 'new name', spiritAnimal: 'new spiritAnimal', spiritAnimalName: 'new spiritAnimalName' };
-      request.put(`${url}/api/spiritAnimal?id=${this.tempSpiritAnimal.id}`)
-      .send(updateSpiritAnimal)
-      .end((err, res) => {
-        if (err) return done(err);
-        expect(res.status).to.equal(200);
-        expect(res.body.id).to.equal(this.tempSpiritAnimal.id);
-        done();
+      it('should return a spirit animal', done => {
+        let updateSpiritAnimal = { name: 'new name', spiritAnimal: 'new spiritAnimal', spiritAnimalName: 'new spiritAnimalName' };
+        request.put(`${url}/api/spiritAnimal?id=${this.tempSpiritAnimal.id}`)
+        .send(updateSpiritAnimal)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body.id).to.equal(this.tempSpiritAnimal.id);
+          for (var prop in updateSpiritAnimal) {
+            expect(res.body[prop]).to.equal(updateSpiritAnimal[prop]);
+          }
+          done();
+        });
       });
     });
   });

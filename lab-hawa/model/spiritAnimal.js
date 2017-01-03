@@ -35,8 +35,8 @@ SpiritAnimal.fetchSpiritAnimal = function(id) {
   return storage.fetchItem('spiritAnimal', id);
 };
 
-SpiritAnimal.updatedSpirtAnimal = function(id, _spiritAnimal) {
-  debug('updatedSpirtAnimal');
+SpiritAnimal.updateSpiritAnimal = function(id, _spiritAnimal) {
+  debug('updateSpirtAnimal');
 
   return storage.fetchItem('spiritAnimal', id)
   .catch( err => Promise.reject(createError(404, err.message)))
