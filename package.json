@@ -21,16 +21,22 @@
   },
   "homepage": "https://github.com/bhavyaab/12-express_middleware#readme",
   "devDependencies": {
-    "bluebird": "^3.4.6",
-    "body-parser": "^1.15.2",
     "chai": "^3.5.0",
-    "debug": "^2.4.5",
-    "express": "^4.14.0",
     "http-errors": "^1.5.1",
     "mocha": "^3.2.0",
-    "morgan": "^1.7.0",
-    "superagent": "^3.3.1"
+    "superagent": "^3.3.1",
   },
-  "dependencies": {},
+  "dependencies": {
+   "bluebird": "^3.4.6",
+   "body-parser": "^1.15.2",
+   "chai": "^3.5.0",
+   "debug": "^2.4.5",
+   "express": "^4.14.0",
+   "http-errors": "^1.5.1",
+   "mocha": "^3.2.0",
+   "morgan": "^1.7.0",
+   "superagent": "^3.3.1",
+   "node-uuid":"^1.4.7"
+  },
   "description": ""
 }
