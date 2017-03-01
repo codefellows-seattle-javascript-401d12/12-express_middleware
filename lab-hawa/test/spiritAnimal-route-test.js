@@ -16,7 +16,7 @@ const exampleSpiritAnimal = {
 describe('Spirit Animal Route', function() {
 
   describe('POST: /api/spiritAnimal', function() {
-    describe('with an valid body', function() {
+    describe('with a valid body', function() {
       after( done => {
         if(this.tempSpiritAnimal) {
           SpiritAnimal.deleteSpiritAnimal(this.tempSpiritAnimal.id)
@@ -35,6 +35,28 @@ describe('Spirit Animal Route', function() {
           expect(res.body.spiritAnimal).to.equal(exampleSpiritAnimal.spiritAnimal);
           expect(res.body.spiritAnimalName).to.equal(exampleSpiritAnimal.spiritAnimalName);
           this.tempSpiritAnimal = res.body;
+          done();
+        });
+      });
+
+      it('Should return a status of 400 and bad request with no body', done => {
+        request.post(`${url}/api/spiritAnimal`)
+        .end((err, res) => {
+          expect(err).to.be.an('error');
+          expect(res.status).to.equal(400);
+          expect(res.body.id).to.equal(undefined);
+          done();
+        });
+      });
+
+      it('Should return a status of 400 and bad request with wrong body inputs', done => {
+        request
+        .post(`${url}/api/spiritAnimal`)
+        .send({hello: 'World', world: 'Hello'})
+        .end((err, res) => {
+          expect(err).to.be.an('error');
+          expect(res.status).to.equal(400);
+          expect(res.body.id).to.equal(undefined);
           done();
         });
       });
@@ -74,7 +96,7 @@ describe('Spirit Animal Route', function() {
 
     describe('with an invalid id', function() {
       it('should respond with a 404 status', done => {
-        request.get(`${url}/api/spiritAnimal/123456789`)
+        request.get(`${url}/api/spiritAnimal/12`)
         .end((err, res) => {
           expect(res.status).to.equal(404);
           done();
